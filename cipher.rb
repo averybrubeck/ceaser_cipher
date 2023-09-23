@@ -2,8 +2,7 @@ require 'pry-byebug'
 def ceaser_cipher
  
     puts "Encrypt or Decrypt Password?" 
-    user_choice = gets.chomp.to_s.downcase
-        
+    user_choice = gets.chomp.to_s.downcase        
     #binding.pry
     if user_choice == "encrypt" || user_choice == "e"           
     #binding.pry
@@ -25,7 +24,7 @@ def ceaser_cipher
    
     #binding.pry
 
-else user_choice == "decrypt" || user_choice == "d"
+elsif user_choice == "decrypt" || user_choice == "d"
     
     puts "Enter Decryption Key"
    
@@ -41,9 +40,8 @@ else user_choice == "decrypt" || user_choice == "d"
     d_pass = pass.each_byte.to_a.map { |c| c - d_key}
 
     puts d_pass.pack('c*')
-    
-
-
+else    
+    puts "Invalid Input Try Again" 
 end
 end
 ceaser_cipher
