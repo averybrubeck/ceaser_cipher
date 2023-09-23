@@ -1,47 +1,50 @@
+#CLI to run ruby cipher.rb encrypt | decrypt
+#STDIN.gets because windows is lame
 require 'pry-byebug'
-def ceaser_cipher
- 
-    puts "Encrypt or Decrypt Password?" 
-    user_choice = gets.chomp.to_s.downcase        
-    #binding.pry
-    if user_choice == "encrypt" || user_choice == "e"           
-    #binding.pry
 
+def caesar_cipher(mode)
+  if mode == 'encrypt' || mode == 'e'
     puts "Enter Password:"
-    pass = gets.chomp 
+    pass = STDIN.gets.chomp 
     
     puts "Enter Encrypt Key:"
-    key = gets.chomp.to_i
+    key = STDIN.gets.chomp.to_i
     
     while key > 26 do 
-        puts "Key To Large Re-enter Encrypt Key:"
-        key = gets.chomp.to_i
+      puts "Key Too Large, Re-enter Encrypt Key:"
+      key = STDIN.gets.chomp.to_i
     end
     
     e_pass = pass.each_byte.to_a.map { |c| c + key }
       
-    puts e_pass.pack('c*')
-   
-    #binding.pry
+    new_pass = e_pass.pack('c*')
 
-elsif user_choice == "decrypt" || user_choice == "d"
-    
+    puts "Password: #{new_pass} Decrypt Key: #{key}"
+
+  elsif mode == 'decrypt' || mode == 'd'
     puts "Enter Decryption Key"
    
-    d_key = gets.chomp.to_i
+    d_key = STDIN.gets.chomp.to_i
+    
     while d_key > 26
-     puts "Enter Decryption Key"
-    d_key = gets.chomp.to_i
+      puts "Enter Decryption Key"
+      d_key = STDIN.gets.chomp.to_i
     end
 
     puts "Enter Password:"
-    pass = gets.chomp
+    pass = STDIN.gets.chomp
     
     d_pass = pass.each_byte.to_a.map { |c| c - d_key}
 
-    puts d_pass.pack('c*')
-else    
-    puts "Invalid Input Try Again" 
+    new_pass =  d_pass.pack('c*')
+    puts "Decrypted Pasword: #{new_pass}"
+  else    
+    puts "Invalid input, please try again" 
+  end
 end
+
+if ARGV.length == 1
+    caesar_cipher(ARGV[0].downcase)
+  else
+    puts "Usage: cipher.rb <encrypt|decrypt>"
 end
-ceaser_cipher
